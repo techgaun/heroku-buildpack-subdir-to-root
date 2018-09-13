@@ -23,3 +23,11 @@ heroku config:set PROJECT_RELATIVE_PATH=packages/adminWeb --app <YOUR_APP>
 - Enjoy the working deployment
 
 - If something does not work, feel free to create an issue
+
+### Debugging (Not Done)
+
+_TODO_
+
+- Configure `SUBDIR_TO_ROOT_DEBUG` to any value
+
+- Re-run deploy and the buildpack should print extra debug information
