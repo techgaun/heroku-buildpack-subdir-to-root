@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# $1 ~> <build_dir>
+
+# Author: techgaun
+
+echo "Running Subdir to Root buildpack"

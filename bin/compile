@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# Author: techgaun
+
+red='\033[0;31m'
+green='\033[0;32m'
+nc='\033[0m'
+
+BUILD_DIR=$(cd $1 && pwd)
+CACHE_DIR=$(cd $2 && pwd)
+ENV_DIR=$(cd $3 && pwd)
+PROJECT_RELATIVE_PATH_FILE="${ENV_DIR}/PROJECT_RELATIVE_PATH"
+
+error() {
+    msg="${1}"
+    echo -e "${red}${msg}${nc}"
+}
+
+die() {
+  error "$@"
+  exit 1
+}
+
+msg() {
+    msg="${1:-nothing}"
+    echo -e "${green}${msg}${nc}"
+}
+
+[ -f "${PROJECT_RELATIVE_PATH_FILE}" ] || die "PROJECT_RELATIVE_PATH is not set"
+
+PROJECT_RELATIVE_PATH=$(cat "${PROJECT_RELATIVE_PATH_FILE}")
+[ -d "${PROJECT_RELATIVE_PATH}" ] || die "PROJECT_RELATIVE_PATH: ${PROJECT_RELATIVE_PATH} does not exist"
+
+mkdir -p "${CACHE_DIR}"
+
+msg "Creating temp directory"
+TMP_DIR=$(mktemp -d "${CACHE_DIR}/subrootXXXXX")
+msg "Created temp directory: ${TMP_DIR}"
+
+msg "Copying subdir: ${PROJECT_RELATIVE_PATH} to temp dir: ${TMP_DIR}"
+cp -R "${BUILD_DIR}/${PROJECT_RELATIVE_PATH}/." "${TMP_DIR}/"
+
+msg "Cleaning and re-creating build directory"
+rm -rf "${BUILD_DIR}"
+mkdir -p "${BUILD_DIR}"
+
+msg "Copying project directory from ${TMP_DIR} to ${BUILD_DIR}"
+cp -R "${TMP_DIR}/." "${BUILD_DIR}/"
+rm -rf "${TMP_DIR}"
+
+exit 0
