@@ -29,6 +29,11 @@ msg() {
 [ -f "${PROJECT_RELATIVE_PATH_FILE}" ] || die "PROJECT_RELATIVE_PATH is not set"
 
 PROJECT_RELATIVE_PATH=$(cat "${PROJECT_RELATIVE_PATH_FILE}")
+
+ls -liah
+
+ls -liah packages
+
 [ -d "${PROJECT_RELATIVE_PATH}" ] || die "PROJECT_RELATIVE_PATH: ${PROJECT_RELATIVE_PATH} does not exist"
 
 mkdir -p "${CACHE_DIR}"
