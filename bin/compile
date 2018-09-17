@@ -30,6 +30,7 @@ msg() {
 
 PROJECT_RELATIVE_PATH=$(cat "${PROJECT_RELATIVE_PATH_FILE}")
 PROJECT_PATH="${BUILD_DIR}/${PROJECT_RELATIVE_PATH}"
+PROJECT_NAME=$(basename "${PROJECT_PATH}")
 
 [ -d "${PROJECT_PATH}" ] || die "PROJECT_RELATIVE_PATH: ${PROJECT_RELATIVE_PATH} does not exist"
 
@@ -39,15 +40,15 @@ msg "Creating temp directory"
 TMP_DIR=$(mktemp -d "${CACHE_DIR}/subrootXXXXX")
 msg "Created temp directory: ${TMP_DIR}"
 
-msg "Copying subdir: ${PROJECT_RELATIVE_PATH} to temp dir: ${TMP_DIR}"
-cp -R "${PROJECT_PATH}/." "${TMP_DIR}/"
+msg "Moving subdir: ${PROJECT_RELATIVE_PATH} to temp dir: ${TMP_DIR}"
+mv "${PROJECT_PATH}" "${TMP_DIR}"
 
 msg "Cleaning and re-creating build directory"
 rm -rf "${BUILD_DIR}"
 mkdir -p "${BUILD_DIR}"
 
-msg "Copying project directory from ${TMP_DIR} to ${BUILD_DIR}"
-cp -R "${TMP_DIR}/." "${BUILD_DIR}/"
+msg "Moving project directory from ${TMP_DIR} to ${BUILD_DIR}"
+mv -T "${TMP_DIR}/${PROJECT_NAME}" "${BUILD_DIR}"
 rm -rf "${TMP_DIR}"
 
 exit 0
