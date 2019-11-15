@@ -3,4 +3,4 @@
 
 # Author: techgaun
 
-echo "Running Subdir to Root buildpack"
+echo "Subdir to Root buildpack"

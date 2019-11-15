@@ -23,7 +23,7 @@ die() {
 
 msg() {
     msg="${1:-nothing}"
-    echo -e "${green}${msg}${nc}"
+    echo -e "       ${green}${msg}${nc}"
 }
 
 [ -f "${PROJECT_RELATIVE_PATH_FILE}" ] || die "PROJECT_RELATIVE_PATH is not set"
