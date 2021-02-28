@@ -2,6 +2,9 @@
 
 # Author: techgaun
 
+# Ensure wildcards in globs match dotfiles too.
+shopt -s dotglob
+
 red='\033[0;31m'
 green='\033[0;32m'
 nc='\033[0m'
@@ -43,12 +46,11 @@ msg "Created temp directory: ${TMP_DIR}"
 msg "Moving subdir: ${PROJECT_RELATIVE_PATH} to temp dir: ${TMP_DIR}"
 mv "${PROJECT_PATH}" "${TMP_DIR}"
 
-msg "Cleaning and re-creating build directory"
-rm -rf "${BUILD_DIR}"
-mkdir -p "${BUILD_DIR}"
+msg "Cleaning build directory"
+rm -rf "${BUILD_DIR}"/*
 
 msg "Moving project directory from ${TMP_DIR} to ${BUILD_DIR}"
-mv -T "${TMP_DIR}/${PROJECT_NAME}" "${BUILD_DIR}"
+mv "${TMP_DIR}/${PROJECT_NAME}"/* "${BUILD_DIR}"
 rm -rf "${TMP_DIR}"
 
 exit 0
