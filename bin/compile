@@ -2,6 +2,8 @@
 
 # Author: techgaun
 
+set -e
+
 # Ensure wildcards in globs match dotfiles too.
 shopt -s dotglob
 
